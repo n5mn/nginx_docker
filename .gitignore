@@ -4,3 +4,4 @@
 *.bkp
 docker_files_example/
 Projects/
+docker_config/config.yaml
