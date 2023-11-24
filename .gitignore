@@ -1,0 +1,6 @@
+.env
+*.sql
+*.old
+*.bkp
+docker_files_example/
+Projects/
