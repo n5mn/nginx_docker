@@ -1,0 +1,16 @@
+services:
+  web:
+    image: ${IMAGE_URL}
+    container_name: ${PROJECT_NAME}-web
+    env_file: .env
+    restart: always
+    volumes:
+      - ../docker_config/upload.ini:/usr/local/etc/php/conf.d/uploads.ini
+    expose:
+      - 80
+    networks:
+      - docker_bridge-network
+
+networks:
+  docker_bridge-network:
+    external: true
