@@ -4,5 +4,8 @@
 *.bkp
 *bkp/
 docker_files_example/
-Projects/
+laravel/
+wordpress/
+php/
+node/
 docker_config/config.yaml
