@@ -3,4 +3,4 @@
 *.old
 *.bkp
 *bkp/
-docker_config/config.yaml
+*.log
