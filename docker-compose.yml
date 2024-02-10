@@ -6,7 +6,6 @@ services:
     env_file: ./docker_config/.env
     ports:
       - "80:80"
-      - "443:443"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - vhostd:/etc/nginx/vhost.d
@@ -24,5 +23,4 @@ volumes:
   conf.d:
   vhostd:
   html:
-  acme:
   dbdata:
