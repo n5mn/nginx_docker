@@ -1,0 +1,52 @@
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    restart: always
+    env_file: ./docker_config/.env
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - certs:/etc/nginx/certs:ro
+      - vhostd:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - /root/nginx/conf:/etc/nginx/conf.d
+      - ./docker_config/nginx.tmpl:/app/nginx.tmpl:rw
+    networks:
+      - bridge-network
+  
+  letsencrypt:
+    image: nginxproxy/acme-companion
+    container_name: letsencrypt
+    restart: always
+    environment:
+      - LETSENCRYPT_RESTART_CONTAINER=false
+      - RENEW_PRIVATE_KEYS=true
+      - LETSENCRYPT_TEST=true
+    volumes_from:
+      - nginx-proxy
+    volumes:
+      - acme:/etc/acme.sh
+      - certs:/etc/nginx/certs:rw
+      - vhostd:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - bridge-network
+
+networks:
+  bridge-network:
+    driver: bridge
+volumes:
+  certs:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: './SSL'
+  vhostd:
+  html:
+  acme:
+  dbdata:
